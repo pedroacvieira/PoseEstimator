@@ -15,36 +15,38 @@
 #pragma once
 
 #include <opencv2/core.hpp>
-#include <Eigen/Eigen>
+#include <Eigen/Core>
 
 #include <utility>
 
 namespace DLR {
+
+/**
+  * typedef for syntactic sugar
+  */
+using rgbd_pair_t = std::pair<cv::Mat, cv::Mat>;
+
+class PoseEstimator {
+public:
   /**
-   * typedef for syntactic sugar
-   */
-  using rgbd_pair_t = std::pair<cv::Mat, cv::Mat>;
+    * C'Tor of PoseEstimator. It shall initialize all ressources
+    * needed for the estimation process.
+    * \param camera_matrix intrinsics of the given camera
+    */
+  PoseEstimator(const cv::Mat& camera_matrix);
 
-  class PoseEstimator {
-  public:
-    /**
-     * C'Tor of PoseEstimator. It shall initialize all ressources
-     * needed for the estimation process.
-     * \param camera_matrix intrinsics of the given camera
-     */
-    PoseEstimator(const cv::Mat& camera_matrix);
+  /**
+    * Estimate the pose between both given image pairs.
+    * \param source source image pair
+    * \param target target image pair
+    * \return 4x4 pose representing relative pose from
+    *         source to target
+    */
+  Eigen::Matrix4d estimate_pose(const rgbd_pair_t& source,
+                                const rgbd_pair_t& target);
 
-    /**
-     * Estimate the pose between both given image pairs.
-     * \param source source image pair
-     * \param target target image pair
-     * \return 4x4 pose representing relative pose from
-     *         source to target
-     */
-    Eigen::Matrix4d estimate_pose(const rgbd_pair_t& source,
-      const rgbd_pair_t& target);
+private:
+  cv::Mat m_camera_matrix;
+};
 
-  private:
-    cv::Mat m_camera_matrix;
-  }
-}
+}  // namespace DLR
