@@ -14,10 +14,7 @@ namespace DLR {
   * needed for the estimation process.
   * \param camera_matrix intrinsics of the given camera
   */
-PoseEstimator::PoseEstimator(const cv::Mat& camera_matrix) : m_camera_matrix(camera_matrix)
-{
-  // write additional code here
-}
+PoseEstimator::PoseEstimator(const cv::Mat& camera_matrix) : m_camera_matrix(camera_matrix) {}
 
 /**
   * Estimate the pose between both given image pairs.
@@ -27,23 +24,26 @@ PoseEstimator::PoseEstimator(const cv::Mat& camera_matrix) : m_camera_matrix(cam
   *         source to target
   */
 Eigen::Matrix4d PoseEstimator::estimate_pose(const rgbd_pair_t& source,
-                                              const rgbd_pair_t& target)
+                                             const rgbd_pair_t& target)
 {
+  cv::SiftFeatureDetector detector;
+
   // Detect SIFT features on source RGB image
-  cv::SiftFeatureDetector source_detector;
   std::vector<cv::KeyPoint> source_keypoints;
-  source_detector.detect(source.first, source_keypoints);
+  detector.detect(source.first, source_keypoints);
 
   // Detect SIFT features on target RGB image
-  cv::SiftFeatureDetector target_detector;
   std::vector<cv::KeyPoint> target_keypoints;
-  target_detector.detect(target.first, target_keypoints);
+  detector.detect(target.first, target_keypoints);
+
+  Eigen::Matrix4d target_pose = Eigen::Matrix4d::Identity();
+  return target_pose;
 }
 
 }  // namespace DLR
 
 int main()
 {
-	std::cout << "Hello CMake." << std::endl;
-	return 0;
+  std::cout << "Hello CMake." << std::endl;
+  return 0;
 }
