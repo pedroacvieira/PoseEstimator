@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-#include <opencv2/features2d/features2d.hpp>
+#include <opencv2/core/eigen.hpp>
 #include <Eigen/Core>
 
 namespace DLR {
@@ -14,7 +14,10 @@ namespace DLR {
   * needed for the estimation process.
   * \param camera_matrix intrinsics of the given camera
   */
-PoseEstimator::PoseEstimator(const cv::Mat& camera_matrix) : m_camera_matrix(camera_matrix) {}
+PoseEstimator::PoseEstimator(const cv::Mat& camera_matrix) : m_camera_matrix(camera_matrix)
+{
+  m_odometry = cv::rgbd::RgbdICPOdometry(m_camera_matrix);
+}
 
 /**
   * Estimate the pose between both given image pairs.
@@ -26,17 +29,18 @@ PoseEstimator::PoseEstimator(const cv::Mat& camera_matrix) : m_camera_matrix(cam
 Eigen::Matrix4d PoseEstimator::estimate_pose(const rgbd_pair_t& source,
                                              const rgbd_pair_t& target)
 {
-  cv::SiftFeatureDetector detector;
+  cv::rgbd::OdometryFrame source_rgbd_frame(source.first, source.second);
+  cv::rgbd::OdometryFrame target_rgbd_frame(target.first, target.second);
 
-  // Detect SIFT features on source RGB image
-  std::vector<cv::KeyPoint> source_keypoints;
-  detector.detect(source.first, source_keypoints);
+  cv::Mat output_pose = cv::Mat(4, 4, CV_64FC1);
 
-  // Detect SIFT features on target RGB image
-  std::vector<cv::KeyPoint> target_keypoints;
-  detector.detect(target.first, target_keypoints);
+  m_odometry.compute(cv::Ptr<cv::rgbd::OdometryFrame>(&source_rgbd_frame),
+                     cv::Ptr<cv::rgbd::OdometryFrame>(&target_rgbd_frame),
+                     output_pose);
 
-  Eigen::Matrix4d target_pose = Eigen::Matrix4d::Identity();
+  Eigen::Matrix4d target_pose;
+  cv::cv2eigen(output_pose, target_pose);
+
   return target_pose;
 }
 

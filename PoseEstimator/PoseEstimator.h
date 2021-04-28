@@ -14,7 +14,11 @@
 
 #pragma once
 
+// Avoid missing header error
+#define OPENCV_DISABLE_EIGEN_TENSOR_SUPPORT
+
 #include <opencv2/core.hpp>
+#include <opencv2/rgbd.hpp>
 #include <Eigen/Core>
 
 #include <utility>
@@ -46,6 +50,8 @@ public:
                                 const rgbd_pair_t& target);
 
 private:
+  cv::rgbd::RgbdICPOdometry m_odometry;
+
   cv::Mat m_camera_matrix;
 };
 
