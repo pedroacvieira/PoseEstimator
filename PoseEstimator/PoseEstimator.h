@@ -14,7 +14,7 @@
 
 #pragma once
 
-// Avoid missing header error
+/*! Avoid missing header error */
 #define OPENCV_DISABLE_EIGEN_TENSOR_SUPPORT
 
 #include <opencv2/core.hpp>
@@ -50,9 +50,9 @@ public:
                                 const rgbd_pair_t& target);
 
 private:
-  cv::rgbd::RgbdICPOdometry m_odometry;
+  cv::rgbd::RgbdICPOdometry m_odometry; /*!< Odometry object to perform the pose estimation */
 
-  cv::Mat m_camera_matrix;
+  cv::Mat m_camera_matrix; /*!< Camera intrinsic calibration matrix */
 };
 
-}  // namespace DLR
+}  /*! namespace DLR */
