@@ -55,4 +55,4 @@ private:
   cv::Mat m_camera_matrix; /*!< Camera intrinsic calibration matrix */
 };
 
-}  /*! namespace DLR */
+} /*! namespace DLR */
