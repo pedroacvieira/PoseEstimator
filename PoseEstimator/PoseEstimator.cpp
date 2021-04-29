@@ -94,7 +94,8 @@ int main()
   /*! Show image for debugging */
   if (SHOW_IMAGES)
   {
-    cv::imshow("Display Test", target.second);
+    cv::imshow("Display RGB", target.first);
+    cv::imshow("Display Depth", target.second);
     cv::waitKey(0); /*! Wait for a keystroke in the window */
   }
   
@@ -112,13 +113,9 @@ int main()
   Eigen::Matrix4d pose = pose_estimator.estimate_pose(source, target);
 
   if (pose.isZero())
-  {
     std::cout << "Pose estimation unsuccessful" << std::endl;
-  }
   else
-  {
     std::cout << "Relative pose:\n" << pose << std::endl;
-  }
 
   return 0;
 }
