@@ -81,15 +81,12 @@ int main()
   DLR::rgbd_pair_t source;
   source.first = cv::imread(path + source_rgb, cv::IMREAD_GRAYSCALE);
   source.second = cv::imread(path + source_depth, cv::IMREAD_ANYDEPTH);
- 
- /*! Scale from 16 bit int to float in [0, 1] */
   source.second.convertTo(source.second, CV_32FC1, scale_factor);
 
   /*! Read target frame pair */
   DLR::rgbd_pair_t target;
   target.first = cv::imread(path + target_rgb, cv::IMREAD_GRAYSCALE);
   target.second = cv::imread(path + target_depth, cv::IMREAD_ANYDEPTH);
-  /*! Scale from 16 bit int to float in [0, 1] */
   target.second.convertTo(target.second, CV_32FC1, scale_factor);
 
   /*! Show image for debugging */
