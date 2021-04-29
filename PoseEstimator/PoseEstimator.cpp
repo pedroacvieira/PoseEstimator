@@ -42,6 +42,7 @@ Eigen::Matrix4d PoseEstimator::estimate_pose(const rgbd_pair_t& source,
 
   cv::Mat output_pose = cv::Mat(4, 4, CV_64FC1);
 
+  /*! TODO: Search the scale factor used in the cv::rgbd functions */
   bool is_valid = m_odometry.compute(source_frame_ptr, target_frame_ptr, output_pose);
 
   Eigen::Matrix4d target_pose;
@@ -53,6 +54,7 @@ Eigen::Matrix4d PoseEstimator::estimate_pose(const rgbd_pair_t& source,
   else
   {
     cv::cv2eigen(output_pose, target_pose);
+    target_pose /= target_pose(3, 3); /*! Just in case */
   }
 
   return target_pose;
@@ -66,8 +68,8 @@ int main()
   /*! TODO: Read filenames and path from config file */
   std::string source_rgb{ "1341839327.392692.png" };
   std::string source_depth{ "1341839327.392719.png" };
-  std::string target_rgb{ "1341839330.905589.png" };
-  std::string target_depth{ "1341839330.905598.png" };
+  std::string target_rgb{ "1341839332.820842.png" };
+  std::string target_depth{ "1341839332.820854.png" };
 
   /*! TODO: Use boost to get cwd or change to C++17 */
   std::string repo_path { "C:/Users/Pedro/pose-estimator/" };
