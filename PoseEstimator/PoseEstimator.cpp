@@ -100,6 +100,7 @@ int main()
   }
   
   /*! Initialize camera matrix */
+  /*! Intrinsic retrieved from TUM Freiburg dataset values "fr3" */
   double fx = 535.4;
   double fy = 539.2;
   double cx = 320.1;
