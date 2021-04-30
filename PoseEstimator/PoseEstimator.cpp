@@ -76,8 +76,8 @@ int main()
   std::string dir_path{ "data/images/fr3_sample/" };
   std::string path = repo_path + dir_path;
 
-  /*! Scale depth images from 16 bit int to float in [0, 1] */
-  double scale_factor = 1.0 / (255.0 * 255.0);
+  /*! Using dataset scale, where a value of 5000 corresponds to 1m */
+  double scale_factor = 1.0 / (5000.0);
   
   /*! Read source frame pair */
   DLR::rgbd_pair_t source;
