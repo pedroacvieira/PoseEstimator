@@ -77,7 +77,7 @@ int main()
   std::string path = repo_path + dir_path;
 
   /*! Using dataset scale, where a value of 5000 corresponds to 1m */
-  double scale_factor = 1.0 / (5000.0);
+  double scale_factor = 2.0e-4;
   
   /*! Read source frame pair */
   DLR::rgbd_pair_t source;
