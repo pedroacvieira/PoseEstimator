@@ -18,10 +18,8 @@ namespace DLR {
   * needed for the estimation process.
   * \param camera_matrix intrinsics of the given camera
   */
-PoseEstimator::PoseEstimator(const cv::Mat& camera_matrix) : m_camera_matrix(camera_matrix)
-{
-  m_odometry = cv::rgbd::RgbdICPOdometry(m_camera_matrix);
-}
+PoseEstimator::PoseEstimator(const cv::Mat& camera_matrix) : m_camera_matrix(camera_matrix),
+                                                             m_odometry(camera_matrix) {}
 
 /**
   * Estimate the pose between both given image pairs.
