@@ -106,7 +106,7 @@ int main()
   double cx = 320.1;
   double cy = 247.6;
   Eigen::Matrix3d intrinsics;
-  intrinsics << fx, 0, cx, 0, fy, cy, 0, 0, 1; /*! It's simpler to intialize an Eigen matrix*/
+  intrinsics << fx, 0, cx, 0, fy, cy, 0, 0, 1; /*! It's simpler to intialize an Eigen matrix */
 
   /*! Initialize pose estimator */
   cv::Mat intrinsics_cv = cv::Mat(3, 3, CV_64FC1, intrinsics.data());
